@@ -1,0 +1,128 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+body{
+    height: 100vh;
+    width: fit-content;
+}
+.dynamic-container{
+    position: fixed;
+    height: 5vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 1vh;
+}
+.dynamic{
+height: 5vh;
+    width: 15vw;
+    background-color: black;
+    border-radius: 40px;
+    min-width: 23vh;
+        min-height: 5vh;
+
+}
+.search-container {
+    padding-top: 1vh;
+    top: 1vh;
+    z-index: 200;
+    width: 98vw;
+    display: flex;
+    align-items: center;
+    height: 8vh;
+    justify-content: center;
+    /* position: fixed; */
+    
+    transition: 700ms cubic-bezier(0.32, 0.7, 0.22, 1.2);
+    left: 0;
+}
+
+.search-container.hov {
+    align-items: center;
+    transform: translate(0%, -33%) scale(0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: 700ms cubic-bezier(0.32, 0.7, 0.22, 1.2);
+}
+
+.search-bar {
+    background-color: black;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    border-radius: 60px;
+    padding: 8px 15px;
+    width: 55vw;
+    height: 8vh;
+    transition: 1000ms cubic-bezier(0.32, 0.7, 0.22, 1.2);
+    /* user-select: none; */
+}
+
+.search-bar input {
+    background: black;
+    flex: 1;
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    color: #cac7ff;
+    z-index: 100;
+    min-height: 40px;
+}
+
+::placeholder {
+    color: #cac7ff;
+    font-size: 17px;
+}
+
+.search-bar button span {
+    width: 25px;
+
+}
+
+.search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.img-gallery-cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  background-color: rgb(12, 18, 28);
+
+}
+.img-gallery-cont .img-gallery{
+   width: 98%;
+   display: flex;
+   flex-wrap: wrap;
+}
+
+
+.img-gallery-cont .img-gallery div{
+   
+    padding: 8px;
+    width: 25%;
+    min-width: 125px;
+    flex-grow: 1;
+    flex-basis: 25%;
+} 
+.img-gallery div img{
+    width: 100%;
+    border-radius: 6px;
+    min-width: 125px;
+    flex-basis: 25%;
+
+}
+

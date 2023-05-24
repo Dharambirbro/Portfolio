@@ -1,0 +1,312 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      border: 0;
+      text-decoration: 0;
+      border: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .tic-tac-toe {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      /* background-color: grey; */
+    }
+    .tic-tac-game-container {
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      grid-template-columns: repeat(3, auto);
+      height: 21em;
+      width: 21em;
+    }
+
+    .tic-tac-game-container .tic-tac-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 4px solid black;
+      border-bottom: 4px solid black;
+      height: 7em;
+      width: 7em;
+      position: relative;
+      cursor: pointer;
+    }
+    .tic-tac-game-container .tic-tac-box:nth-child(3n + 3) {
+      border-right: 0;
+    }
+    .tic-tac-game-container .tic-tac-box:nth-child(n + 7) {
+      border-bottom: 0;
+    }
+    .tic-tac-game-container .tic-tac-box:last-child {
+      border-bottom: 0;
+      border-right: 0;
+    }
+    .tic-tac-box.x::before,
+    .tic-tac-box.x::after {
+      content: "";
+      position: absolute;
+      width: calc(7em * 0.97);
+      height: 1em;
+      background-color: black;
+    }
+    .tic-tac-box.x::before {
+      transform: rotate(45deg);
+    }
+    .tic-tac-box.x::after {
+      transform: rotate(-45deg);
+    }
+
+    .tic-tac-box.circle::before,
+    .tic-tac-box.circle::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background-color: black;
+    }
+    .tic-tac-box.circle::before {
+      width: 6.2em;
+      height: 6.2em;
+    }
+    .tic-tac-box.circle::after {
+      width: calc(6.2em * 0.7);
+      height: calc(6.2em * 0.7);
+      background-color: white;
+    }
+
+    .tic-start.hov {
+      display: none;
+    }
+    .tic-regame.hov {
+      display: none;
+    }
+    .tic-start,
+    .tic-regame {
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      background: black;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .tic-start button,
+    .tic-regame button {
+      border-radius: 8px;
+      font-size: 3rem;
+      cursor: pointer;
+      padding: 0.25em 0.5em;
+      border: 1px solid black;
+    }
+    .tic-regame,
+    .tic-start {
+      position: absolute;
+    }
+    .tic-winning {
+      color: white;
+      font-size: 5rem;
+    }
+    /* for pointer ===============*/
+    .tic-tac-pointer {
+      opacity: 0;
+      -webkit-user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* crosss */
+    .tic-tac-pointer.x::before,
+    .tic-tac-pointer.x::after {
+      content: "";
+      position: absolute;
+      width: calc(7em * 0.97);
+      height: 1em;
+      background-color: black;
+      z-index: 100;
+    }
+    .tic-tac-pointer.x::before {
+      transform: rotate(45deg);
+    }
+    .tic-tac-pointer.x::after {
+      transform: rotate(-45deg);
+    }
+    /*circle */
+    .tic-tac-pointer.circle::before,
+    .tic-tac-pointer.circle::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background-color: black;
+      z-index: 100;
+    }
+    .tic-tac-pointer.circle::before {
+      width: 6.2em;
+      height: 6.2em;
+    }
+    .tic-tac-pointer.circle::after {
+      width: calc(6.2em * 0.7);
+      height: calc(6.2em * 0.7);
+      background-color: white;
+    }
+  </style>
+  <body>
+    <div class="tic-tac-toe">
+      <div class="tic-tac-game-container">
+        <div class="tic-tac-box" id="0"></div>
+        <div class="tic-tac-box" id="1"></div>
+        <div class="tic-tac-box" id="2"></div>
+        <div class="tic-tac-box" id="3"></div>
+        <div class="tic-tac-box" id="4"></div>
+        <div class="tic-tac-box" id="5"></div>
+        <div class="tic-tac-box" id="6"></div>
+        <div class="tic-tac-box" id="7"></div>
+        <div class="tic-tac-box" id="8"></div>
+      </div>
+      <div class="tic-start">
+        <button>Start Game</button>
+      </div>
+      <div class="tic-regame hov">
+        <div class="tic-winning"></div>
+        <button><p>Restart</p></button>
+      </div>
+    </div>
+
+    <script>
+      const restarting = document.querySelector(".tic-regame");
+      const cellsbox = document.querySelectorAll(".tic-tac-box");
+      const starting = document.querySelector(".tic-start");
+      const startingbtn = document.querySelector(".tic-start button");
+
+      const tictac = document.querySelector(".tic-tac-toe");
+
+      console.log(restarting.querySelector("button"));
+      var x_class = "x";
+      var Circle_class = "circle";
+      var circleTurn;
+      var chances = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+      {
+        //for restarting game
+        restarting.querySelector("button").addEventListener("click", startgame);
+
+        function startgame() {
+          circleTurn = false;
+          cellsbox.forEach((cell) => {
+            cell.classList.remove(x_class);
+            cell.classList.remove(Circle_class);
+            cell.removeEventListener("click", handleClick);
+            cell.addEventListener("click", handleClick, { once: true });
+          });
+          restarting.classList.toggle("hov");
+        }
+
+        // for starting game
+        startingbtn.addEventListener("click", () => {
+          starting.classList.toggle("hov");
+        });
+        //logic for changing and the cross circle working
+
+        cellsbox.forEach((cell) => {
+          cell.addEventListener("click", handleClick, { once: true });
+        });
+        function handleClick(e) {
+          const cell = e.target;
+          const cellboxvalue = cell.getAttribute("id");
+          const currentClass = circleTurn ? Circle_class : x_class;
+          placemark(currentClass, cell);
+          //for winning checking
+          if (checkwin(currentClass)) {
+            endgame(false);
+          } else if (isdraw()) {
+            endgame(true);
+          } else {
+            swapturns();
+          }
+          //switching turns
+        }
+      }
+
+      function endgame(draw) {
+        if (draw) {
+          setTimeout(() => {
+            restarting.querySelector(".tic-winning").innerText = "draw!";
+          }, 500);
+        } else {
+          setTimeout(() => {
+            restarting.querySelector(".tic-winning").innerText = `${
+              circleTurn ? "O's" : "X's"
+            } Wins!`;
+          }, 500);
+        }
+        setTimeout(() => {
+          restarting.classList.toggle("hov");
+        }, 500);
+      }
+      function isdraw() {
+        return [...cellsbox].every((cell) => {
+          return (
+            cell.classList.contains(x_class) ||
+            cell.classList.contains(Circle_class)
+          );
+        });
+      }
+      function placemark(currentClass, cell) {
+        cell.classList.add(currentClass);
+      }
+      function swapturns() {
+        circleTurn = !circleTurn;
+        currentClass = circleTurn ? Circle_class : x_class;
+      }
+      function checkwin(currentClass) {
+        return chances.some((combination) => {
+          return combination.every((index) => {
+            return cellsbox[index].classList.contains(currentClass);
+          });
+        });
+      }
+
+      //===================
+
+      // function myfun(event) {
+      //   let x;
+      //   let y;
+      //   x = event.clientX;
+      //   y = event.clientY;
+      //   pointer.style.position = "fixed";
+      //   pointer.style.left = x + "px";
+      //   pointer.style.top = y + "px";
+      // }
+      // tictac.addEventListener("mousemove", () => {
+      //   myfun(event);
+      // });
+      // tictac.addEventListener("mouseover", () => {
+      //   myfun(event);
+      //   pointer.style.opacity = "1";
+      // });
+      // tictac.addEventListener("mouseout", () => {
+      //   pointer.style.opacity = "0";
+      // });
+    </script>
+  </body>
+</html>
